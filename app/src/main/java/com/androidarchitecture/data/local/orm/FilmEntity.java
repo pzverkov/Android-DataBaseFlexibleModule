@@ -1,16 +1,21 @@
-package com.androidarchitecture.data.local.entity;
-
-import android.arch.persistence.room.Entity;
-import android.arch.persistence.room.PrimaryKey;
+package com.androidarchitecture.data.local.orm;
 
 import com.androidarchitecture.data.local.Film;
 import com.google.gson.annotations.SerializedName;
 
-@Entity(tableName = "movies")
-public class MovieEntity extends Film{
+import org.greenrobot.greendao.annotation.Entity;
+import org.greenrobot.greendao.annotation.Id;
+import org.greenrobot.greendao.annotation.Index;
+import org.greenrobot.greendao.annotation.Generated;
 
-    @PrimaryKey
-    @SerializedName("id")
+/**
+ * Created by Peter on 05.07.2017.
+ */
+
+@Entity(indexes = { @Index(value = "posterPath", unique = true) })
+public class FilmEntity extends Film{
+
+    @Id
     private int id;
 
     @SerializedName("poster_path")
@@ -39,6 +44,26 @@ public class MovieEntity extends Film{
 
     @SerializedName("original_language")
     private String originalLanguage;
+
+    @Generated(hash = 1498373041)
+    public FilmEntity(int id, String posterPath, boolean adult, String overview,
+            String originalTitle, String title, int voteCount, double voteAverage,
+            String backdropPath, String originalLanguage) {
+        this.id = id;
+        this.posterPath = posterPath;
+        this.adult = adult;
+        this.overview = overview;
+        this.originalTitle = originalTitle;
+        this.title = title;
+        this.voteCount = voteCount;
+        this.voteAverage = voteAverage;
+        this.backdropPath = backdropPath;
+        this.originalLanguage = originalLanguage;
+    }
+
+    @Generated(hash = 749020676)
+    public FilmEntity() {
+    }
 
     public int getId() {
         return id;
@@ -118,5 +143,9 @@ public class MovieEntity extends Film{
 
     public void setOriginalLanguage(String originalLanguage) {
         this.originalLanguage = originalLanguage;
+    }
+
+    public boolean getAdult() {
+        return this.adult;
     }
 }
